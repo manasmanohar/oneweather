@@ -1,9 +1,9 @@
-import { ForecastData } from "../types/types";
+import { ForecastData, ProcessedForecast } from "../types/types";
 
 export const processForecastData = (
   forecastData: ForecastData[]
-): ForecastData[] => {
-  const processedForecast: ForecastData[] = [];
+): ProcessedForecast[] => {
+  const processedForecast: ProcessedForecast[] = [];
   const forecastByDate: { [date: string]: ForecastData[] } = {};
   forecastData.forEach((item) => {
     const date = item.dt_txt.split(" ")[0];

@@ -75,6 +75,8 @@ export interface ForecastData {
     pod: string;
   };
   dt_txt: string;
+  icon: string;
+  date: string;
 }
 
 export interface CityData {
@@ -91,6 +93,13 @@ export interface CityData {
   sunset: number;
 }
 export type AirQualityIndex = 1 | 2 | 3 | 4 | 5;
+export interface ProcessedForecast {
+  date: string;
+  icon: string;
+  maxTemperature: number;
+  minTemperature: number;
+  chanceOfRain: number;
+}
 
 export interface AirQualityData {
   coord: {
