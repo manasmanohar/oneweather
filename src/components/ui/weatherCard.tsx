@@ -28,7 +28,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
     weatherData.weather[0]?.description || ""
   );
   return (
-    <div className=" p-4 my-2 rounded-xl flex flex-col  border-neutral-400 w-full border-[1px] ">
+    <div className=" p-4 mb-8 rounded-xl flex flex-col bg-[#18181b] ring-1 ring-gray-700/30 w-full  ">
       <div className="flex justify-between w-full ">
         <div className="flex flex-col ">
           <p className="font-bold">{formatDate(weatherData.dt)}</p>

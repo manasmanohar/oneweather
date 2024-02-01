@@ -12,7 +12,7 @@ const SearchBar: React.FC = () => {
     try {
       const newLocation = await fetchReverseGeocoding(searchQuery);
       if (newLocation) {
-        console.log(newLocation, "from saerch bar");
+        console.log(newLocation, "from search bar");
         await updateData(newLocation);
       }
     } catch (error) {
@@ -21,17 +21,17 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="mr-2">
+    <div className="flex items-center justify-center mr-4">
+      <div className="mr-2 ">
         <input
-          className="rounded-md bg-black ring-2 ring-neutral-700"
+          className="rounded-md bg-[#18181B] ring-2 mr-2 ring-gray-700/30 p-1"
           type="text"
           placeholder=" city name / zip code"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="items-center mt-1 flex-inline">
+      <div className="items-center  flex-inline">
         <button
           className="ring-2 ring-neutral-700 p-1 rounded"
           onClick={handleSearch}

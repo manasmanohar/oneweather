@@ -33,7 +33,7 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({ forecastData }) => {
     : null;
 
   return (
-    <div className="flex flex-col w-full border rounded-lg p-4">
+    <div className="flex flex-col w-full  ring-1 ring-gray-700/30 rounded-lg p-4 my-8">
       <div className="flex gap-2 items-center mb-2">
         <CiCalendarDate size={22} />
         <p className="text-md font-bold text-neutral-400"> Forecast Section</p>

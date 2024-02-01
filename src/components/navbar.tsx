@@ -4,7 +4,7 @@ import Menu from "./ui/menu";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="flex p-2 justify-between items-center">
+    <div className="flex p-4 bg-[#18181B]  border-b-2 border-gray-700/30 justify-end items-center">
       <SearchBar />
       <Menu />
     </div>

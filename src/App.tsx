@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import WeatherCard from "./components/ui/weatherCard";
 import ForecastSection from "./components/forecastSection";
-import FeelsLikeWidget from "./components/ui/widgets/feelsLike";
 import { useWeatherContext } from "./context/weatherContext";
 import { fetchGeoCoordinates } from "./api/geoCoordinates";
-import { BounceLoaderComponent } from "./components/ui/bounceLoader"; // Corrected import
+import { BounceLoaderComponent } from "./components/ui/bounceLoader";
+import WidgetSection from "./components/widgetsSection";
 
 const App: React.FC = () => {
   const {
@@ -43,7 +43,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className=" p-4 bg-primarybg relative">
+    <div className=" p-4 bg-[#18181B] relative">
       <div>
         <WeatherCard
           weatherData={weather}
@@ -53,15 +53,14 @@ const App: React.FC = () => {
         />
         <ForecastSection forecastData={forecast} />
         <div>
-          <p>Widgets</p>
-          <FeelsLikeWidget />
+          <WidgetSection weatherData={weather} />
         </div>
+        <BounceLoaderComponent
+          active={loading && !firstLoad}
+          color="lightgreen"
+          size={30}
+        />
       </div>
-      <BounceLoaderComponent
-        active={loading && !firstLoad}
-        color="lightgreen"
-        size={30}
-      />
     </div>
   );
 };

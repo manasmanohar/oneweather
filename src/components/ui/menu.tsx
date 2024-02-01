@@ -48,7 +48,7 @@ const Menu = () => {
   };
 
   return (
-    <div className="flex " ref={dropdownRef}>
+    <div className="flex  " ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className="ring-2 ring-neutral-700 rounded-md"
@@ -63,7 +63,8 @@ const Menu = () => {
         )}
       </button>
       {isDropdownOpen && (
-        <div className="absolute right-0 mt-12 gap-2 mr-4  w-32 bg-black flex flex-col  p-2  bg-background border rounded-lg">
+        <div className="z-999 absolute right-0 mt-12 gap-2 mr-4  w-32 bg-black flex flex-col  p-2  bg-background border rounded-lg">
+          {" "}
           <ThemeToggle />
           <UnitToggle onUpdateUnit={handleUpdateUnit} />
         </div>
