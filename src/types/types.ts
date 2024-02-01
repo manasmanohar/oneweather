@@ -157,4 +157,16 @@ export interface Location {
   longitude: number;
 }
 
+export interface AppComponentProps {
+  darkMode?: boolean;
+}
+
 export type CustomError = string | Error;
+
+export type ThemeContextType = {
+  theme: string;
+  toggleTheme: () => void;
+  unit: string;
+
+  toggleUnit: () => void;
+};

@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import WeatherCard from "./components/ui/weatherCard";
 import ForecastSection from "./components/forecastSection";
 import Loader from "./components/ui/loader";
+import { useTheme } from "./context/themeContext";
+import { useWeatherContext } from "./context/weatherContext";
 
+import FeelsLikeWidget from "./components/ui/widgets/feelsLike";
 import {
   LocationData,
   WeatherData,
@@ -14,7 +17,6 @@ import { fetchGeoCoordinates } from "./api/geoCoordinates";
 import { fetchWeather } from "./api/weather";
 import { fetchForecast } from "./api/forecast";
 import { fetchAirQuality } from "./api/airQuality";
-import { fetchReverseGeocoding } from "./api/reverseGeocoding";
 
 const App: React.FC = () => {
   const [loadingWeather, setLoadingWeather] = useState(false);
@@ -25,10 +27,7 @@ const App: React.FC = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData[] | null>(null);
   const [airQuality, setAirQuality] = useState<AirQualityData | null>(null);
-
-  const [unit, setUnit] = useState("metric");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-
+  const { unit } = useTheme(); //set default unit to metric
   useEffect(() => {
     initializeApp();
   }, []);
@@ -49,35 +48,21 @@ const App: React.FC = () => {
     }
   };
 
-  const handleSearch = async () => {
-    try {
-      const newLocation = await fetchReverseGeocoding(searchQuery);
-      console.log(newLocation);
-      if (newLocation) {
-        await updateData(newLocation);
-        setLocation(newLocation);
-      }
-    } catch (error) {
-      handleError("Error handling search:", error);
-    }
-  };
-
   const handleUpdateLocation = async () => {
+    console.log("handleUpdateLocation");
     try {
       const gpsLocation = await fetchGeoCoordinates();
+      console.log("fetchGeoCoordinates");
+
       if (gpsLocation) {
+        console.log(gpsLocation + "gpsLocation");
         await updateData(gpsLocation);
         setLocation(gpsLocation);
-        console.log(location);
+        console.log(location + "location from handleUpdateLocation");
       }
     } catch (error) {
       handleError("Error updating location from GPS:", error);
     }
-  };
-  const toggleUnit = () => {
-    const newUnit = unit === "metric" ? "imperial" : "metric";
-    setUnit(newUnit);
-    updateData(location!);
   };
 
   const updateData = async (location: LocationData) => {
@@ -111,42 +96,18 @@ const App: React.FC = () => {
       setLoadingAirQuality(false);
     }
   };
-  const temperatureSymbol = unit === "metric" ? "°C" : "°F";
+  // const temperatureSymbol = unit === "metric" ? "°C" : "°F";
 
   const handleError = (message: string, error: unknown) => {
     console.error(message, error);
   };
 
   return (
-    <div className="mx-auto p-4">
-      <div className="flex mb-4 ">
-        <input
-          type="text"
-          placeholder="Enter location"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="mr-2 p-2 border border-gray-300 w-2/3"
-        />
-        <div className="flex ">
-          <button
-            onClick={handleSearch}
-            className="p-2 mr-2 w-24 bg-blue-500 text-white rounded"
-          >
-            Search
-          </button>
-          <button
-            onClick={toggleUnit}
-            className="p-2 w-12 bg-blue-500 text-white rounded"
-          >
-            {temperatureSymbol}
-          </button>{" "}
-        </div>
-      </div>
-
+    <div className="mx-auto p-4 bg-primarybg ">
       {loadingWeather || loadingForecast || loadingAirQuality ? (
         <Loader />
       ) : (
-        <>
+        <div className="flex flex-col gap-2">
           <WeatherCard
             weatherData={weather}
             airQualityData={airQuality}
@@ -154,7 +115,11 @@ const App: React.FC = () => {
             unit={unit}
           />
           <ForecastSection forecastData={forecast} />
-        </>
+          <div>
+            <p>Widgets</p>
+            <FeelsLikeWidget />
+          </div>
+        </div>
       )}
     </div>
   );

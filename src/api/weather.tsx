@@ -9,6 +9,7 @@ export const fetchWeather = async (
   unit: string
 ): Promise<WeatherData | null> => {
   try {
+    console.log(location);
     const response = await axios.get(API_BASE_URL_WEATHER, {
       params: {
         lat: location.latitude,
