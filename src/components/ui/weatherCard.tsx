@@ -14,7 +14,7 @@ interface WeatherCardProps {
 const WeatherCard: React.FC<WeatherCardProps> = ({
   weatherData,
   airQualityData,
-  onUpdateLocation,
+  // onUpdateLocation,
   unit,
 }) => {
   if (!weatherData) {

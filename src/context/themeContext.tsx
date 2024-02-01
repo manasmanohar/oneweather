@@ -25,7 +25,7 @@ interface ThemeProviderProps {
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [location, setLocation] = useState<LocationData | null>(null);
+  const [location] = useState<LocationData | null>(null);
   const [theme, setTheme] = useState("dark");
   const [unit, setUnit] = useState("metric");
 
