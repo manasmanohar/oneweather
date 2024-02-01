@@ -12,9 +12,7 @@ import { fetchGeoCoordinates } from "../api/geoCoordinates";
 import { fetchWeather } from "../api/weather";
 
 interface WeatherContextType {
-  loadingWeather: boolean;
-  loadingForecast: boolean;
-  loadingAirQuality: boolean;
+  loading: boolean;
   location: LocationData | null;
   weather: WeatherData | null;
   forecast: ForecastData[] | null;
@@ -28,44 +26,32 @@ const WeatherContext = createContext<WeatherContextType | null>(null);
 export const WeatherProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [loadingWeather, setLoadingWeather] = useState(false);
-  const [loadingForecast, setLoadingForecast] = useState(false);
-  const [loadingAirQuality, setLoadingAirQuality] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState<LocationData | null>(null);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData[] | null>(null);
   const [airQuality, setAirQuality] = useState<AirQualityData | null>(null);
 
-  const updateData: WeatherContextType["updateData"] = async (location) => {
+  const fetchData = async (location: LocationData) => {
     try {
-      setLoadingWeather(true);
+      setLoading(true);
       const weatherData = await fetchWeather(location, "metric");
       setWeather(weatherData);
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-    } finally {
-      setLoadingWeather(false);
-    }
 
-    try {
-      setLoadingForecast(true);
       const forecastData = await fetchForecast(location, "metric");
       setForecast(forecastData);
-    } catch (error) {
-      console.error("Error fetching forecast data:", error);
-    } finally {
-      setLoadingForecast(false);
-    }
 
-    try {
-      setLoadingAirQuality(true);
       const airQualityData = await fetchAirQuality(location);
       setAirQuality(airQualityData);
     } catch (error) {
-      console.error("Error fetching air quality data:", error);
+      console.error("Error fetching data:", error);
     } finally {
-      setLoadingAirQuality(false);
+      setLoading(false);
     }
+  };
+
+  const updateData: WeatherContextType["updateData"] = async (location) => {
+    await fetchData(location);
   };
 
   const handleUpdateLocation: WeatherContextType["handleUpdateLocation"] =
@@ -73,7 +59,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({
       try {
         const gpsLocation = await fetchGeoCoordinates();
         if (gpsLocation) {
-          await updateData(gpsLocation);
+          await fetchData(gpsLocation);
           setLocation(gpsLocation);
         }
       } catch (error) {
@@ -84,9 +70,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <WeatherContext.Provider
       value={{
-        loadingWeather,
-        loadingForecast,
-        loadingAirQuality,
+        loading,
         location,
         weather,
         forecast,
