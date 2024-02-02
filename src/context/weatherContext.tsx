@@ -10,6 +10,7 @@ import { fetchAirQuality } from "../api/airQuality";
 import { fetchForecast } from "../api/forecast";
 import { fetchGeoCoordinates } from "../api/geoCoordinates";
 import { fetchWeather } from "../api/weather";
+import { useTheme } from "./themeContext";
 
 interface WeatherContextType {
   loading: boolean;
@@ -17,7 +18,7 @@ interface WeatherContextType {
   weather: WeatherData | null;
   forecast: ForecastData[] | null;
   airQuality: AirQualityData | null;
-  updateData: (location: LocationData) => Promise<void>;
+  updateData: (location: LocationData, unit: string) => Promise<void>; // Accept both location and unit
   handleUpdateLocation: () => Promise<void>;
 }
 
@@ -31,14 +32,20 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData[] | null>(null);
   const [airQuality, setAirQuality] = useState<AirQualityData | null>(null);
+  const { unit } = useTheme();
 
-  const fetchData = async (location: LocationData) => {
+  const fetchData = async (location: LocationData, unit: string) => {
     try {
       setLoading(true);
-      const weatherData = await fetchWeather(location, "metric");
+      setLocation(location);
+
+      console.log(unit, "unit before calling fetch");
+      const weatherData = await fetchWeather(location, unit);
       setWeather(weatherData);
 
-      const forecastData = await fetchForecast(location, "metric");
+      const forecastData = await fetchForecast(location, unit);
+
+      console.log(unit, "unit in weather context");
       setForecast(forecastData);
 
       const airQualityData = await fetchAirQuality(location);
@@ -51,7 +58,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const updateData: WeatherContextType["updateData"] = async (location) => {
-    await fetchData(location);
+    await fetchData(location, unit);
   };
 
   const handleUpdateLocation: WeatherContextType["handleUpdateLocation"] =
@@ -59,7 +66,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({
       try {
         const gpsLocation = await fetchGeoCoordinates();
         if (gpsLocation) {
-          await fetchData(gpsLocation);
+          await fetchData(gpsLocation, unit);
           setLocation(gpsLocation);
         }
       } catch (error) {

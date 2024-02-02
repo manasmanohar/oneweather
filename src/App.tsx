@@ -5,19 +5,13 @@ import { useWeatherContext } from "./context/weatherContext";
 import { fetchGeoCoordinates } from "./api/geoCoordinates";
 import { BounceLoaderComponent } from "./components/ui/bounceLoader";
 import WidgetSection from "./components/widgetsSection";
-
+import { useTheme } from "./context/themeContext";
 const App: React.FC = () => {
-  const {
-    updateData,
-    // handleUpdateLocation,
-    loading,
-    // location,
-    weather,
-    forecast,
-    airQuality,
-  } = useWeatherContext();
+  const { updateData, loading, weather, forecast, airQuality } =
+    useWeatherContext();
 
   const [firstLoad, setFirstLoad] = useState(true);
+  const { unit } = useTheme();
 
   useEffect(() => {
     initializeApp();
@@ -31,18 +25,17 @@ const App: React.FC = () => {
   const initializeApp = async () => {
     try {
       const defaultLocation = { latitude: 12.9716, longitude: 77.5946 };
-      await updateData(defaultLocation);
+      await updateData(defaultLocation, unit);
 
       const gpsLocation = await fetchGeoCoordinates();
       if (gpsLocation) {
         setFirstLoad(false);
-        await updateData(gpsLocation);
+        await updateData(gpsLocation, unit);
       }
     } catch (error) {
       handleError("Error initializing app:", error);
     }
   };
-
   const handleError = (message: string, error: unknown) => {
     console.error(message, error);
   };
@@ -56,12 +49,7 @@ const App: React.FC = () => {
           unit="metric"
           timezone={weather?.timezone || 0}
         />
-        {/* <WeatherCard
-        weatherData={weather}
-        airQualityData={airQuality}
-        onUpdateLocation={handleUpdateLocation}
-        unit="metric"
-      /> */}
+
         <ForecastSection forecastData={forecast} />
         <div>
           <WidgetSection weatherData={weather} />

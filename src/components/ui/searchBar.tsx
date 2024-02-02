@@ -2,18 +2,19 @@ import React, { useEffect, useRef } from "react";
 import { fetchReverseGeocoding } from "../../api/reverseGeocoding";
 import { IoIosSearch } from "react-icons/io";
 import { useWeatherContext } from "../../context/weatherContext";
+import { useTheme } from "../../context/themeContext";
 
 const SearchBar: React.FC = () => {
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const { updateData } = useWeatherContext();
   const searchInputRef = useRef<HTMLInputElement>(null);
-
+  const unit = useTheme();
   const handleSearch = async () => {
     try {
       const newLocation = await fetchReverseGeocoding(searchQuery);
       if (newLocation) {
         console.log(newLocation, "from search bar");
-        await updateData(newLocation);
+        await updateData(newLocation, unit.toString());
       }
     } catch (error) {
       console.error("Error handling search:", error);

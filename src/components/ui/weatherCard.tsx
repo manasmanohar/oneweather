@@ -20,7 +20,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
     return null;
   }
 
-  const temperatureSymbol = unit === "metric" ? "°F" : "°C";
+  const temperatureSymbol = unit === "metric" ? "C" : "F";
   const minTemp = Math.round(weatherData.main.temp_min);
   const maxTemp = Math.round(weatherData.main.temp_max);
   const weatherDescription = capitalizeEveryWord(
@@ -44,7 +44,13 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
         </div>
       </div>
       <div className="flex items-center justify-center">
-        <p className="text-[4rem] font-bold">27</p>
+        <div className="flex items-center">
+          <p className="text-[4rem] font-bold ">
+            {" "}
+            {Math.round(weatherData.main.temp)}
+          </p>
+          <p className="mb-7"> ° {temperatureSymbol}</p>
+        </div>
       </div>
       <div className="flex flex-row justify-between">
         <div>
