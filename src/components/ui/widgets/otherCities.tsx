@@ -4,7 +4,7 @@ import React from "react";
 import { WeatherData } from "../../../types/types";
 import { useWeatherContext } from "../../../context/weatherContext";
 import { fetchReverseGeocoding } from "../../../api/reverseGeocoding";
-
+import { useTheme } from "../../../context/themeContext";
 interface OtherCitiesWidgetProps {
   weatherData: WeatherData;
 }
@@ -14,6 +14,7 @@ const OtherCitiesWidget: React.FC<OtherCitiesWidgetProps> = ({
 }) => {
   const { updateData } = useWeatherContext();
   const { name } = weatherData;
+  const { unit } = useTheme();
 
   // Sample list of other cities
   const otherCities = ["New York", "London", "Paris", "Tokyo"];
@@ -25,7 +26,7 @@ const OtherCitiesWidget: React.FC<OtherCitiesWidgetProps> = ({
 
       // Update weather data in the context
       if (newLocation) {
-        await updateData(newLocation);
+        await updateData(newLocation, unit.toString());
       }
     } catch (error) {
       console.error("Error handling city button click:", error);

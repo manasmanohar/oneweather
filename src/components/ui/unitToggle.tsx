@@ -16,7 +16,9 @@ const UnitToggle: React.FC<UnitToggleProps> = ({ onUpdateUnit }) => {
     console.log(unit);
     const updatedUnit = unit === "metric" ? "imperial" : "metric";
     toggleUnit(unit);
-    updateData(location, updatedUnit);
+    if (location) {
+      updateData(location, updatedUnit);
+    }
     await onUpdateUnit();
   };
 

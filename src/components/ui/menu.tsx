@@ -44,7 +44,7 @@ const Menu = () => {
     console.log("Updated unit in Menu:", updatedUnit); // Log the updated unit
     console.log("Location in Menu:", location);
 
-    updateData(location, updatedUnit);
+    // updateData(location, updatedUnit);
     if (location) {
       await updateData(location, unit);
     }
