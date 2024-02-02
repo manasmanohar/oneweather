@@ -22,6 +22,11 @@ const App: React.FC = () => {
   useEffect(() => {
     initializeApp();
   }, []);
+  useEffect(() => {
+    if (weather) {
+      document.title = `${weather.name}: ${weather.main.temp}°C - Plutoo`;
+    }
+  }, [weather]);
 
   const initializeApp = async () => {
     try {
