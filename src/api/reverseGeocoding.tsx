@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { LocationData } from "../types/types";
 const API_BASE_URL_GEOCODING_DIRECT =
-  "http://api.openweathermap.org/geo/1.0/direct";
+  "https://api.openweathermap.org/geo/1.0/direct";
 const API_BASE_URL_GEOCODING_ZIPCODE =
-  "http://api.openweathermap.org/geo/1.0/zip";
+  "https://api.openweathermap.org/geo/1.0/zip";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
