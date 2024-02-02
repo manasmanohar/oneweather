@@ -5,11 +5,11 @@ import { useWeatherContext } from "../../context/weatherContext";
 import { useTheme } from "../../context/themeContext";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
-
 const Menu = () => {
   const { location, updateData } = useWeatherContext();
-  const { toggleUnit, unit } = useTheme();
+  const { unit } = useTheme();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
@@ -38,12 +38,15 @@ const Menu = () => {
   }, []);
 
   const handleUpdateUnit = async () => {
-    toggleUnit();
-    console.log("Updated unit:", unit);
-    console.log("Location:", location);
+    // toggleUnit();
+    const updatedUnit = unit === "metric" ? "imperial" : "metric";
 
+    console.log("Updated unit in Menu:", updatedUnit); // Log the updated unit
+    console.log("Location in Menu:", location);
+
+    updateData(location, updatedUnit);
     if (location) {
-      await updateData(location);
+      await updateData(location, unit);
     }
   };
 
@@ -66,6 +69,7 @@ const Menu = () => {
         <div className="z-999 absolute right-0 mt-12 gap-2 mr-4  lg:w-[20%] w-[40%]   bg-[#18181B]  flex flex-col  p-2  bg-background ring-1 ring-gray-700  rounded-lg">
           {" "}
           <ThemeToggle />
+          {/* <UnitToggle onUpdateUnit={handleUpdateUnit} /> */}
           <UnitToggle onUpdateUnit={handleUpdateUnit} />
         </div>
       )}

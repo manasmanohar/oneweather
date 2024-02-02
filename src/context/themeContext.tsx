@@ -13,7 +13,7 @@ interface ThemeContextType {
   theme: string;
   toggleTheme: () => void;
   unit: string;
-  toggleUnit: () => void;
+  toggleUnit: (unit: string) => void;
   updateData: (location: LocationData) => Promise<void>;
   location: LocationData | null;
 }
@@ -21,7 +21,6 @@ interface ThemeContextType {
 interface ThemeProviderProps {
   children: ReactNode;
 }
-
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
@@ -30,33 +29,37 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [unit, setUnit] = useState("metric");
 
   const toggleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  const toggleUnit = () => {
-    setUnit((currentUnit) =>
-      currentUnit === "metric" ? "imperial" : "metric"
-    );
+  const toggleUnit = async (unit: string) => {
+    const currentLocation = location;
+
+    const updatedUnit = unit === "metric" ? "imperial" : "metric";
+    setUnit(updatedUnit);
+    console.log("updated unit", updatedUnit);
+
+    console.log(location, "toggleUnit");
+    if (currentLocation) {
+      await updateData(currentLocation);
+    }
   };
 
   const updateData: ThemeContextType["updateData"] = async (location) => {
     try {
-      console.log(location); // Fetch weather data with the new unit
+      console.log(location);
       await fetchWeather(location, unit);
-      // Fetch forecast data with the new unit
       await fetchForecast(location, unit);
-      // Add similar calls for other data (air quality, etc.) if needed
     } catch (error) {
       console.error("Error updating data:", error);
     }
   };
 
-  // Update data whenever location or unit changes
   useEffect(() => {
     if (location) {
       updateData(location);
     }
-  }, [unit]);
+  }, [unit, location]);
 
   return (
     <ThemeContext.Provider

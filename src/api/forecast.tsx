@@ -9,6 +9,7 @@ export const fetchForecast = async (
   location: LocationData,
   unit: string
 ): Promise<ForecastData[] | null> => {
+  console.log("unit in fetchForecast", unit);
   try {
     const response = await axios.get(API_BASE_URL_FORECAST, {
       params: {

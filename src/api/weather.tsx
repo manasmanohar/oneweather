@@ -18,7 +18,7 @@ export const fetchWeather = async (
         units: unit,
       },
     });
-    console.log("fetch: Weather Data:", response.data);
+    console.log("api unit ", unit);
     return response.data;
   } catch (error) {
     console.error("Error fetching weather data:", error);
