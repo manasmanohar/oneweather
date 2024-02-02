@@ -10,7 +10,7 @@ export const ThemeToggle = () => {
     <div className=" rounded-md inline-flex">
       <button
         onClick={toggleTheme}
-        className="inline-flex items-center justify-center border rounded-md h-8 w-full"
+        className="inline-flex items-center justify-center ring-1 ring-gray-700 rounded-md h-full py-4 w-full"
         type="button"
         aria-haspopup="menu"
         aria-expanded="false"

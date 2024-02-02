@@ -15,6 +15,7 @@ export interface WeatherData {
     main: string;
     description: string;
     icon: string;
+    timezone: number;
   }[];
   clouds: {
     all: number;
@@ -36,6 +37,7 @@ export interface WeatherData {
   };
   dt: number;
   dt_txt: string;
+  timezone: number;
   name: string;
 }
 

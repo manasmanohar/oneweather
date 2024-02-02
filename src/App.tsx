@@ -9,7 +9,7 @@ import WidgetSection from "./components/widgetsSection";
 const App: React.FC = () => {
   const {
     updateData,
-    handleUpdateLocation,
+    // handleUpdateLocation,
     loading,
     // location,
     weather,
@@ -48,9 +48,15 @@ const App: React.FC = () => {
         <WeatherCard
           weatherData={weather}
           airQualityData={airQuality}
-          onUpdateLocation={handleUpdateLocation}
           unit="metric"
+          timezone={weather?.timezone || 0}
         />
+        {/* <WeatherCard
+        weatherData={weather}
+        airQualityData={airQuality}
+        onUpdateLocation={handleUpdateLocation}
+        unit="metric"
+      /> */}
         <ForecastSection forecastData={forecast} />
         <div>
           <WidgetSection weatherData={weather} />

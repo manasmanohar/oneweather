@@ -18,7 +18,7 @@ const WindDirection: React.FC<WindDirectionProps> = ({ weatherData }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between h-full gap-8 ring-1 ring-slate-700 rounded-lg p-4">
+    <div className="flex flex-col justify-between h-full gap-8 ring-1 ring-gray-700/30  rounded-lg p-4">
       <div className="flex flex-col gap-y-2">
         <div className="flex gap-2 items-center">
           <FaRegCompass size={20} />

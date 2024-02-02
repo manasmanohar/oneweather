@@ -48,10 +48,10 @@ const Menu = () => {
   };
 
   return (
-    <div className="flex  " ref={dropdownRef}>
+    <div className="flex 999 " ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="ring-2 ring-neutral-700 rounded-md"
+        className=" rounded-md"
         type="button"
         aria-haspopup="menu"
         aria-expanded={isDropdownOpen}
@@ -63,7 +63,7 @@ const Menu = () => {
         )}
       </button>
       {isDropdownOpen && (
-        <div className="z-999 absolute right-0 mt-12 gap-2 mr-4  w-32 bg-black flex flex-col  p-2  bg-background border rounded-lg">
+        <div className="z-999 absolute right-0 mt-12 gap-2 mr-4  lg:w-[20%] w-[40%]   bg-[#18181B]  flex flex-col  p-2  bg-background ring-1 ring-gray-700  rounded-lg">
           {" "}
           <ThemeToggle />
           <UnitToggle onUpdateUnit={handleUpdateUnit} />

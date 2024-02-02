@@ -1,11 +1,8 @@
-// MapWidget.tsx
-
 import React from "react";
-
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface MapWidgetProps {
-  weatherData: any; // Replace 'any' with the actual type of your weather data
+  weatherData: any;
 }
 
 const MapWidget: React.FC<MapWidgetProps> = ({ weatherData }) => {
@@ -14,10 +11,14 @@ const MapWidget: React.FC<MapWidgetProps> = ({ weatherData }) => {
   const mapUrl = `https://tile.openweathermap.org/map/precipitation_new/4/1/8.png?appid=${API_KEY}`;
 
   return (
-    <div className="flex flex-col gap-4 w-full border-white p-4">
-      <div className="w-full">
-        {/* Replace the placeholder with your map component */}
-        <img src={mapUrl} alt="Weather Map" className="w-full h-auto" />
+    <div className="p-4 rounded-xl   flex flex-col bg-[#18181b] ring-1 ring-gray-700/30 w-full ">
+      <p className="font-bold">Precipitation Map</p>
+      <div className="w-full h-74  ">
+        <img
+          src={mapUrl}
+          alt="Weather Map"
+          className="w-full mt-2  h-72 p-4  rounded-xl  bg-[#18181b] ring-1 ring-gray-700/30  "
+        />
       </div>
     </div>
   );

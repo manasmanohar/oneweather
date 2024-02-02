@@ -19,7 +19,7 @@ const UnitToggle: React.FC<UnitToggleProps> = ({ onUpdateUnit }) => {
     <div className=" rounded-md inline-flex">
       {" "}
       <button
-        className="inline-flex items-center justify-center border rounded-md h-8 w-full"
+        className="inline-flex items-center justify-center ring-1 h-full py-4 ring-gray-700 rounded-md  w-full"
         onClick={handleToggleUnit}
       >
         <FaTemperatureQuarter className="mr-4" />

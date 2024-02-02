@@ -33,7 +33,7 @@ const OtherCitiesWidget: React.FC<OtherCitiesWidgetProps> = ({
   };
 
   return (
-    <div className="flex flex-col justify-between h-full gap-8 ring-1 ring-slate-700 rounded-lg p-4">
+    <div className="flex flex-col justify-between h-full gap-8 ring-1 ring-gray-700/30  rounded-lg p-4">
       <div className="flex flex-col gap-y-2">
         <div className="flex gap-2 items-center">
           <p className="font-bold text-sm">Other Cities</p>
@@ -42,7 +42,7 @@ const OtherCitiesWidget: React.FC<OtherCitiesWidgetProps> = ({
           {otherCities.map((city) => (
             <button
               key={city}
-              className="bg-black ring-2 ring-bg-neutral-400 rounded p-2 hover:bg-gray-400 focus:outline-none"
+              className=" ring-1 ring-gray-700/30   rounded p-2 hover:bg-gray-400 focus:outline-none"
               onClick={() => handleCityButtonClick(city)}
             >
               {city}

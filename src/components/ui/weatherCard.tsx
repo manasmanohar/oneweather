@@ -1,20 +1,19 @@
 import React from "react";
 import { WeatherData, AirQualityData } from "../../types/types";
-import { formatDate } from "../../utils/formating";
-import { MdOutlineGpsFixed } from "react-icons/md";
-
+import { FaLocationArrow } from "react-icons/fa6";
 import { capitalizeEveryWord } from "../../utils/formating";
+import Clock from "./clock";
+
 interface WeatherCardProps {
   weatherData: WeatherData | null;
   airQualityData: AirQualityData | null;
-  onUpdateLocation: () => void;
   unit: string;
+  timezone: number;
 }
 
 const WeatherCard: React.FC<WeatherCardProps> = ({
   weatherData,
   airQualityData,
-  // onUpdateLocation,
   unit,
 }) => {
   if (!weatherData) {
@@ -27,18 +26,21 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
   const weatherDescription = capitalizeEveryWord(
     weatherData.weather[0]?.description || ""
   );
+
   return (
-    <div className=" p-4 mb-8 rounded-xl flex flex-col bg-[#18181b] ring-1 ring-gray-700/30 w-full  ">
-      <div className="flex justify-between w-full ">
-        <div className="flex flex-col ">
-          <p className="font-bold">{formatDate(weatherData.dt)}</p>
-          <p className="flex  items-center gap-1">
-            {weatherData.name}
-            <MdOutlineGpsFixed />
-          </p>
-        </div>
-        <div>
-          <p className="font-bold">12:27:16 PM</p>
+    <div className="p-4 mb-8 rounded-xl flex flex-col bg-[#18181b] ring-1 ring-gray-700/30 w-full">
+      <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full">
+          <div>
+            <p className="flex items-center justify-between gap-1">
+              {weatherData.name}
+              <FaLocationArrow />
+            </p>
+          </div>
+          <div>
+            {" "}
+            <Clock timezoneOffset={weatherData.timezone} />
+          </div>
         </div>
       </div>
       <div className="flex items-center justify-center">
@@ -56,7 +58,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
             <p>{weatherDescription}</p>
           </div>
           <div className="flex">
-            <p className=" text-neutral-400 mr-4">
+            <p className="text-neutral-400 mr-4">
               H:{minTemp}
               {temperatureSymbol}
             </p>
